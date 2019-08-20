@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import App from './app.vue'
-import Router from 'vue-router'
-import Home from './compnonts/home.vue'
-import Mine from './compnonts/my.vue'
+import Vue from 'vue';
+import App from './app.vue';
+import Router from 'vue-router';
+import Home from './compnonts/home.vue';
+import Mine from './compnonts/my.vue';
 // const Home = require.ensure([], () => require(`./compnonts/home.vue`), 'home');
 Vue.use(Router);
 const router = new Router({
@@ -18,7 +18,7 @@ const router = new Router({
             component: Mine
         }
     ]
-})
+});
 
 Vue.config.productionTip = false;
 new Vue({
@@ -28,4 +28,4 @@ new Vue({
     components: {
         App
     }
-})
+});

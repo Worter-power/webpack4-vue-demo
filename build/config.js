@@ -4,6 +4,8 @@ const ip = require('ip');
 const nodeExternals = require('webpack-node-externals');
 const webpackConfig = require('../webpack.config');
 const utils = require('./utils');
+exports.eslink = webpackConfig.openEslink;
+exports.name = webpackConfig.name;
 // 本机IP
 exports.myip = ip.address();
 // 文件输出路径
@@ -35,8 +37,8 @@ exports.devServer = {
     hot: true, // 开启热更新
     contentBase: webpackConfig.contentBase,
     compress: true,
-    progress: true,
-    inline: false, // 构建消息是否会出现在浏览器控制台
+    // progress: true,
+    inline: true, // 构建消息是否会出现在浏览器控制台  :: 如果为false 浏览器则不会自动刷新
     proxy: webpackConfig.proxy,
     stats: "errors-only",
     overlay: {
@@ -76,4 +78,4 @@ var externals = {
 };
 exports.externalsObject = externals;
 exports.externals = [externals, nodeExternals()];
-exports.jsexclude = /node_modules|utils\/popper\.js|utils\/date\.js/;
+exports.jsexclude = /node_modules/;

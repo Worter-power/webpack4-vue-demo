@@ -1,5 +1,7 @@
 const path = require('path');
 module.exports = {
+    openEslink: true,
+    name: 'xx',
     buildPublicPath: '',
     port: 8080,
     publicPath: '/',
