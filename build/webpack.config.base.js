@@ -7,12 +7,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const config = require('./config')
 const isProd = process.env.NODE_ENV == 'production';
 const Happypack = require("happypack");
+const merge = require('webpack-merge')
 const postcss = require('./postcss.config');
 module.exports = {
     //输入
-    entry: {
+    entry: merge({
         app: ['babel-polyfill', './src/index.js'],
-    },
+    }, config.entries),
     //输出
     output: {
         path: path.join(__dirname, '../dist'),

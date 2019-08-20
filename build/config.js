@@ -4,10 +4,13 @@ const ip = require('ip');
 const nodeExternals = require('webpack-node-externals');
 const webpackConfig = require('../webpack.config');
 const utils = require('./utils');
+
 exports.eslink = webpackConfig.openEslink;
 exports.name = webpackConfig.name;
 // 本机IP
 exports.myip = ip.address();
+// 多入口
+exports.entries = utils.entries();
 // 文件输出路径
 exports.assetsRoot = path.resolve(__dirname, '../dist/');
 // 生产环境配置

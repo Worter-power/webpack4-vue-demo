@@ -12,22 +12,22 @@ const config = require('./config')
 module.exports = merge(base, {
     externals: config.externals,
     optimization: {
-        splitChunks: {
-            minChunks: 3,
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    test: /\.(scss|css)$/,
-                    chunks: 'all',
-                    enforce: true
-                },
-                vendor: {
-                    test: /node_modules/,
-                    name: 'vendor',
-                    chunks: 'all'
-                }
-            }
-        },
+        // splitChunks: {
+        //     minChunks: 5,
+        //     cacheGroups: {
+        //         styles: {
+        //             name: 'styles',
+        //             test: /\.(scss|css)$/,
+        //             chunks: 'all',
+        //             enforce: true
+        //         },
+        //         vendor: {
+        //             test: /node_modules/,
+        //             name: 'vendor',
+        //             chunks: 'all'
+        //         }
+        //     }
+        // },
         minimizer: [ // 用于配置 minimizers 和选项
             // webpack 不支持es6语法的压缩，这里要使用需要babel配合
             new UglifyJsPlugin({
