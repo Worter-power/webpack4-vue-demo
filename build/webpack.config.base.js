@@ -47,12 +47,6 @@ module.exports = {
         },
         rules: [
             {
-                test: /\.(jsx?|babel|es6)$/,
-                include: process.cwd(),
-                exclude: config.jsexclude,
-                loader: 'babel-loader'
-            },
-            {
                 test: /\.json$/,  //用于匹配loaders所处理文件拓展名的正则表达式
                 use: 'json-loader', //具体loader的名称
                 type: 'javascript/auto',
@@ -61,29 +55,6 @@ module.exports = {
             {
                 test: /\.vue$/,
                 use: 'vue-loader'
-            },
-            {
-                test: /\.json$/,  //用于匹配loaders所处理文件拓展名的正则表达式
-                use: 'json-loader', //具体loader的名称
-                type: 'javascript/auto',
-                exclude: config.jsexclude,
-            },
-            {
-                test: /\.js$/,
-                enforce: "pre", // 编译前检查
-                exclude: config.jsexclude, // 不检测的文件
-                include: path.resolve("src"), // 指定检查的目录
-                use: "Happypack/loader?id=js"
-            },
-            {
-                test: /\.(js|jsx)$/,
-                use: [{
-                    loader:'babel-loader',
-                    options:{// options、query不能和loader数组一起使用
-                        cacheDirectory: true// 利用缓存，提高性能，babel is slow
-                    },
-                }],
-                include: path.resolve(__dirname, 'src')
             },
             {
                 test: /\.(png|jpg|gif|jepg|svg|webp)$/,
@@ -178,7 +149,35 @@ module.exports = {
                     }
                 ]
             }
-        ]
+        ].concat(
+            config.eslink ? [{
+                test: /\.(js|jsx)$/,
+                enforce: "pre", // 编译前检查
+                exclude: config.jsexclude, // 不检测的文件
+                include: path.resolve("src"), // 指定检查的目录
+                use: "Happypack/loader?id=js"
+                // use: [
+                //     {
+                //         loader: 'eslint-loader',
+                //         options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
+                //             formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
+                //         }
+                //     }
+                // ]
+            }] : [
+                {
+                    test: /\.(js|jsx)$/,
+                    use: "Happypack/loader?id=js",
+                    // use: [{
+                    //     loader:'babel-loader',
+                    //     options:{// options、query不能和loader数组一起使用
+                    //         cacheDirectory: true// 利用缓存，提高性能，babel is slow
+                    //     },
+                    // }],
+                    include: path.resolve(__dirname, 'src')
+                }
+            ]
+        )
     },
     performance: {
         hints: "warning", // false 不展示警告或错误提示。 | "error" 将展示一条警告，通知你这是体积大的资源。在开发环境，我们推荐这样。| "warning"
@@ -195,10 +194,15 @@ module.exports = {
         new Happypack({
             id: "js",
             use: [
-                {
+                config.eslink ? {
                     loader: 'eslint-loader',
                     options: { // 这里的配置项参数将会被传递到 eslint 的 CLIEngine 
                         formatter: require('eslint-friendly-formatter') // 指定错误报告的格式规范
+                    }
+                } : {
+                    loader: 'babel-loader',
+                    options:{// options、query不能和loader数组一起使用
+                        cacheDirectory: true// 利用缓存，提高性能，babel is slow
                     }
                 }
             ]
@@ -216,6 +220,7 @@ module.exports = {
             template: './public/index.html',
             favicon: './public/favicon.ico',
             inject: 'body', // js 挂在地方
+            chunks: ['manifest', 'vendor', 'app'],
             minify: {
                 removeComments: true,// 移除HTML中的注释
                 collapseWhitespace: true, // 删除空白符与换行符

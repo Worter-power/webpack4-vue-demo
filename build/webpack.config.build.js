@@ -10,25 +10,25 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); /
 const config = require('./config')
 
 module.exports = merge(base, {
-    externals: config.externals,
+    externals: config.externalsObject,
     optimization: {
         namedChunks: true,
         moduleIds: 'hashed',
         splitChunks: {
-            // minChunks: 1,
-            // cacheGroups: {
-            //     styles: {
-            //         name: 'styles',
-            //         test: /\.(scss|css)$/,
-            //         chunks: 'all',
-            //         enforce: true
-            //     },
-            //     vendor: {
-            //         test: /node_modules/,
-            //         name: 'vendor',
-            //         chunks: 'all'
-            //     }
-            // },
+            minChunks: 1,
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.(scss|css)$/,
+                    chunks: 'all',
+                    enforce: true
+                },
+                vendor: {
+                    test: /node_modules/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            },
             // maxInitialRequests: 6,
             // cacheGroups: {
             //     dll: {
