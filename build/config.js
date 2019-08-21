@@ -63,7 +63,6 @@ exports.alias = {
 };
 // 忽略打包的node插件
 var externals = {
-    vue: 'vue',
     jquery: 'window.jQuery',
     axios: 'axios',
     moment: 'moment',

@@ -7,7 +7,6 @@
     </div>
 </template>
 <script>
-import moment from 'moment';
 export default {
     name:'app',
     data(){
@@ -27,7 +26,7 @@ export default {
         }
     },
     created(){
-        console.log(process.env, moment());
+        console.log(process.env,);
         this.init();
     },
     methods: {

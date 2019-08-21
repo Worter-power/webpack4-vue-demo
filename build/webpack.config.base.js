@@ -13,7 +13,7 @@ module.exports = {
     //输入
     entry: merge({
         app: ['babel-polyfill', './src/index.js'],
-    }, config.entries),
+    }, isProd ? config.entries : {}),
     //输出
     output: {
         path: path.join(__dirname, '../dist'),

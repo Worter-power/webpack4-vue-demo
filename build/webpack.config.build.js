@@ -12,22 +12,49 @@ const config = require('./config')
 module.exports = merge(base, {
     externals: config.externals,
     optimization: {
-        // splitChunks: {
-        //     minChunks: 5,
-        //     cacheGroups: {
-        //         styles: {
-        //             name: 'styles',
-        //             test: /\.(scss|css)$/,
-        //             chunks: 'all',
-        //             enforce: true
-        //         },
-        //         vendor: {
-        //             test: /node_modules/,
-        //             name: 'vendor',
-        //             chunks: 'all'
-        //         }
-        //     }
-        // },
+        namedChunks: true,
+        moduleIds: 'hashed',
+        splitChunks: {
+            // minChunks: 1,
+            // cacheGroups: {
+            //     styles: {
+            //         name: 'styles',
+            //         test: /\.(scss|css)$/,
+            //         chunks: 'all',
+            //         enforce: true
+            //     },
+            //     vendor: {
+            //         test: /node_modules/,
+            //         name: 'vendor',
+            //         chunks: 'all'
+            //     }
+            // },
+            // maxInitialRequests: 6,
+            // cacheGroups: {
+            //     dll: {
+            //         chunks:'all',
+            //         test: /[\\/]node_modules[\\/](jquery|core-js|vue|vue-router)[\\/]/,
+            //         name: 'dll',
+            //         priority: 2,
+            //         enforce: true,
+            //         reuseExistingChunk: true
+            //     },
+            //     superSlide: {
+            //         chunks:'all',
+            //         test: /[\\/]src[\\/]assets[\\/]js[\\/]/,
+            //         name: 'superSlide',
+            //         priority: 1,
+            //         enforce: true,
+            //         reuseExistingChunk: true
+            //     },
+            //     commons: {
+            //         name: 'commons',
+            //         minChunks: 2,//Math.ceil(pages.length / 3), 当你有多个页面时，获取pages.length，至少被1/3页面的引入才打入common包
+            //         chunks:'all',
+            //         reuseExistingChunk: true
+            //     }
+            // }
+        },
         minimizer: [ // 用于配置 minimizers 和选项
             // webpack 不支持es6语法的压缩，这里要使用需要babel配合
             new UglifyJsPlugin({
